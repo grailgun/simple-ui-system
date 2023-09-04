@@ -21,6 +21,6 @@ public class MainMenu : MonoBehaviour
         var pageData = new PageData();
         pageData.Add("description", "This is a Simple UI System. Created by Sinatrya");
 
-        _uiPage.SceneUI.PushPage(descriptionPageId, pageData);
+        _uiPage.OpenPage(descriptionPageId, pageData);
     }
 }

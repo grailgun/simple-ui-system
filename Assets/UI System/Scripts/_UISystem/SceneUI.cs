@@ -61,7 +61,7 @@ namespace Core.UI
 
             // Set current top page condition
             UIPage topPage = GetTopPage();
-            if (topPage != null && pushedPage.disablePreviousPage)
+            if (topPage != null && pushedPage.DisablePreviousPage)
             {
                 topPage.Close();
             }

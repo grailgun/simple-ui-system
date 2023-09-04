@@ -1185,8 +1185,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1720760021}
-        m_TargetAssemblyTypeName: Core.UI.UIPage, Assembly-CSharp
-        m_MethodName: Back
+        m_TargetAssemblyTypeName: Core.UI.UIPage, SimpleUISystem
+        m_MethodName: Return
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1411,9 +1411,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 800872858}
-        m_TargetAssemblyTypeName: Core.UI.SceneUI, Assembly-CSharp
-        m_MethodName: PopPage
+      - m_Target: {fileID: 1969384960}
+        m_TargetAssemblyTypeName: Core.UI.UIPage, SimpleUISystem
+        m_MethodName: Return
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1779,13 +1779,13 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 800872858}
-        m_TargetAssemblyTypeName: Core.UI.SceneUI, Assembly-CSharp
-        m_MethodName: PushPage
+      - m_Target: {fileID: 1969384960}
+        m_TargetAssemblyTypeName: Core.UI.UIPage, SimpleUISystem
+        m_MethodName: OpenPage
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 2fdead3ecee676b4890434db810b6c24, type: 2}
-          m_ObjectArgumentAssemblyTypeName: Core.UI.UIEnum, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Core.UI.UIEnum, SimpleUISystem
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3763,9 +3763,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 800872858}
-        m_TargetAssemblyTypeName: Core.UI.SceneUI, SimpleUISystem
-        m_MethodName: PushPage
+      - m_Target: {fileID: 123445660}
+        m_TargetAssemblyTypeName: Core.UI.UIPage, SimpleUISystem
+        m_MethodName: OpenPage
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: f7535dfc821386b4aaf423d008b3171d, type: 2}
@@ -4199,9 +4199,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 800872858}
-        m_TargetAssemblyTypeName: Core.UI.SceneUI, SimpleUISystem
-        m_MethodName: PushPage
+      - m_Target: {fileID: 123445660}
+        m_TargetAssemblyTypeName: Core.UI.UIPage, SimpleUISystem
+        m_MethodName: OpenPage
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 2fdead3ecee676b4890434db810b6c24, type: 2}
@@ -4725,13 +4725,13 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 800872858}
-        m_TargetAssemblyTypeName: Core.UI.SceneUI, Assembly-CSharp
-        m_MethodName: PopToPage
-        m_Mode: 2
+      - m_Target: {fileID: 1720760021}
+        m_TargetAssemblyTypeName: Core.UI.UIPage, SimpleUISystem
+        m_MethodName: ReturnToFirstPage
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 48cacb3452c6d1743a62d814c48ac5e6, type: 2}
-          m_ObjectArgumentAssemblyTypeName: Core.UI.UIEnum, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4877,9 +4877,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 800872858}
-        m_TargetAssemblyTypeName: Core.UI.SceneUI, SimpleUISystem
-        m_MethodName: PopToFirstPage
+      - m_Target: {fileID: 1545161197}
+        m_TargetAssemblyTypeName: Core.UI.UIPage, SimpleUISystem
+        m_MethodName: ReturnToFirstPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
