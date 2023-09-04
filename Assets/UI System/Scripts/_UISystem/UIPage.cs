@@ -28,7 +28,7 @@ namespace Core.UI
         internal void SetupPage(SceneUI sceneUI)
         {
             _sceneUI = sceneUI;
-            TurnOffNow();
+            TurnOffNow();            
         }
 
         internal void OnPush(PageData data)
