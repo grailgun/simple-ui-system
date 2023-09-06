@@ -28,6 +28,7 @@ namespace Core.UI
         internal void SetupPage(SceneUI sceneUI)
         {
             _sceneUI = sceneUI;
+            Debug.Log($"Setup Page {pageId}");
             TurnOffNow();            
         }
 

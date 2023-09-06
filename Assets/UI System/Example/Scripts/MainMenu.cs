@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Page Reference")]
     public UIEnum descriptionPageId;
-
+   
     private UIPage _uiPage;
 
     private void Awake()
@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
     public void OpenDescription()
     {
         var pageData = new PageData();
-        pageData.Add("description", "This is a Simple UI System. Created by Sinatrya");
+        pageData.Add("description", "");
 
         _uiPage.OpenPage(descriptionPageId, pageData);
     }

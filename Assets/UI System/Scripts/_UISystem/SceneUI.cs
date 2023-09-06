@@ -155,6 +155,7 @@ namespace Core.UI
 
             foreach (var page in pages)
             {
+                page.gameObject.SetActive(true);
                 if (page.PageID == null)
                 {
                     Debug.LogError($"Page id of Page {page.name} is Null. Can't add to dictionary.");

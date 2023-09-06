@@ -20,7 +20,6 @@ public class DescriptionPopup : MonoBehaviour
 
     private void OnPopupPushed(PageData data)
     {
-        Debug.Log(data == null);
         descriptionText.SetText(data.Get<string>("description"));
     }
 }
