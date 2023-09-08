@@ -10,14 +10,11 @@ public class MainMenu : MonoBehaviour
     [Header("Page Reference")]
     public EnumId descriptionPageId;
 
-    private GameManager _gameManager;
-
     private UIPage _uiPage;
 
     private void Awake()
     {
         _uiPage = GetComponent<UIPage>();
-        _gameManager = SceneServiceProvider.GetService<GameManager>();
     }
 
     public void OpenDescription()
