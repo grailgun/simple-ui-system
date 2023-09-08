@@ -22,10 +22,10 @@ namespace Core.UI
         }
 
         [Header("ENABLE ALL CONTAINERS")]
-        public bool OnSelectNothing = false;
+        public bool OnSelectNothing = true;
         public bool OnSelectOnAnotherRoot = false;
         public bool OnSelectItself = false;
-        public bool OnSelectOwnRoot = false;
+        public bool OnSelectOwnRoot = true;
         public bool OnSelectOnSibling = false;
 
         private void Awake()

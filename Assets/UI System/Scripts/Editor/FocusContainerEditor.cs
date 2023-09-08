@@ -14,6 +14,9 @@ namespace Core.UI.UIEditor
             DrawDefaultInspector();
 
             componentTarget = (FocusContainer)target;
+            componentTarget.OnSelectNothing = true;
+            componentTarget.OnSelectOwnRoot = true;
+            componentTarget.OnSelectItself = true;
             Selection.selectionChanged = OnSelectionChanged;
         }
 
