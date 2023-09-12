@@ -8,13 +8,13 @@ namespace Core
     [DefaultExecutionOrder(-2)]
     public class SceneCore : MonoBehaviour
     {
-        public Dictionary<EnumId, SceneService> Services => _cachedServices;
+        public Dictionary<EnumId, ISceneService> Services => _cachedServices;
 
         [Header("Scene Services")]
         [SerializeField]
-        private List<SceneService> services = new List<SceneService>();
+        private List<GameObject> servicesGameObjects = new List<GameObject>();
 
-        private Dictionary<EnumId, SceneService> _cachedServices = new Dictionary<EnumId, SceneService>();
+        private Dictionary<EnumId, ISceneService> _cachedServices = new Dictionary<EnumId, ISceneService>();
         
         private void Awake()
         {
@@ -22,26 +22,27 @@ namespace Core
 
             foreach (var serviceGO in servicesOnScene)
             {
-                var service = serviceGO.GetComponent<SceneService>();
-                if (services.Contains(service) == false)
-                    services.Add(service);
+                if (servicesGameObjects.Contains(serviceGO) == false)
+                    servicesGameObjects.Add(serviceGO);
             }
 
-            foreach (var service in services)
+            foreach (var serviceGO in servicesGameObjects)
             {
-                if(service.ServiceId != null)
+                var service = serviceGO.GetComponent<ISceneService>();
+                if (service == null)
+                    continue;
+                if (service.ServiceId != null)
                     _cachedServices.TryAdd(service.ServiceId, service);
 
-                service.InjectCore(this);
+                service.Core = this;
             }
         }
 
         private IEnumerator Start()
         {
-            foreach (var service in services)
+            foreach (var service in _cachedServices.Values)
             {
                 yield return service.StartService();
-                service.Init();
             }
         }
     }
@@ -67,7 +68,7 @@ namespace Core
             return _cachedCore;
         }
 
-        public static T GetService<T>(EnumId serviceId) where T : SceneService
+        public static T GetService<T>(EnumId serviceId) where T : ISceneService
         {
             var core = GetSceneCore();
 
@@ -79,7 +80,7 @@ namespace Core
             return (T)service;
         }
 
-        public static T GetService<T>() where T : SceneService
+        public static T GetService<T>() where T : ISceneService
         {
             var core = GetSceneCore();
             foreach (var service in core.Services.Values)
@@ -89,7 +90,7 @@ namespace Core
             }
 
             Debug.LogWarning($"No services found in the scene");
-            return null;
+            return default(T);
         }
     }    
 }

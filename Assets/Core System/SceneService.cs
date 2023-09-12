@@ -5,28 +5,21 @@ using UnityEngine.Events;
 
 namespace Core
 {
-    public abstract class SceneService : MonoBehaviour
+    public interface ISceneService
+    {
+        public EnumId ServiceId { get; }
+        public SceneCore Core { get; set; }
+        public IEnumerator StartService();
+    }
+
+    public abstract class SceneService : MonoBehaviour, ISceneService
     {
         public EnumId ServiceId => serviceId;
-        public SceneCore Core => _sceneCore;
+        public SceneCore Core { get; set; }
 
         [Header("SERVICE PARAMETER")]
         [SerializeField]
         private EnumId serviceId;
-
-        public UnityEvent OnServiceInitialized;
-
-        private SceneCore _sceneCore;
-
-        internal void InjectCore(SceneCore sceneCore)
-        {
-            _sceneCore = sceneCore;
-        }
-
-        internal void Init()
-        {
-            OnServiceInitialized?.Invoke();
-        }
 
         public virtual IEnumerator StartService() { yield return null; }
     }
