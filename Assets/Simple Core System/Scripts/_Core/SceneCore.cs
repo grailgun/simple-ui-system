@@ -8,9 +8,12 @@ namespace Core
     [DefaultExecutionOrder(-2)]
     public class SceneCore : MonoBehaviour
     {
+        public EnumId CoreId => coreId;
         public Dictionary<EnumId, ISceneService> Services => _cachedServices;
 
         [Header("Scene Services")]
+        [SerializeField]
+        private EnumId coreId;
         [SerializeField]
         private List<GameObject> servicesGameObjects = new List<GameObject>();
 
@@ -18,6 +21,7 @@ namespace Core
         
         private void Awake()
         {
+            SceneServiceProvider.AssignCore(this);
             var servicesOnScene = GameObject.FindGameObjectsWithTag(SceneServiceProvider.SCENE_SERVICE_TAG);
 
             foreach (var serviceGO in servicesOnScene)
@@ -45,6 +49,11 @@ namespace Core
                 yield return service.StartService();
             }
         }
+
+        private void OnDestroy()
+        {
+            SceneServiceProvider.RemoveCore(this);
+        }
     }
 
     public static class SceneServiceProvider
@@ -52,6 +61,7 @@ namespace Core
         public const string SCENE_CORE_TAG = "GameController";        
         public const string SCENE_SERVICE_TAG = "SceneService";
 
+        private static Dictionary<EnumId, SceneCore> _cachedCores = new Dictionary<EnumId, SceneCore>();
         private static SceneCore _cachedCore;
 
         public static SceneCore GetSceneCore()
@@ -68,10 +78,43 @@ namespace Core
             return _cachedCore;
         }
 
+        public static void AssignCore(SceneCore core)
+        {
+            if (core.CoreId == null)
+            {
+                Debug.LogWarning($"Core {core.name} ID is already null");
+                return;
+            }
+
+            if (_cachedCores.ContainsKey(core.CoreId))
+            {
+                Debug.LogWarning($"Core {core.CoreId.name} is already added");
+                return;
+            }
+
+            _cachedCores.Add(core.CoreId, core);
+        }
+
+        public static void RemoveCore(SceneCore core)
+        {
+            if (core.CoreId == null)
+            {
+                Debug.LogWarning($"Core {core.name} ID is already null");
+                return;
+            }
+
+            if (_cachedCores.ContainsKey(core.CoreId) == false)
+            {
+                Debug.LogWarning($"Core {core.CoreId.name} is not exist");
+                return;
+            }
+
+            _cachedCores.Remove(core.CoreId);
+        }
+
         public static T GetService<T>(EnumId serviceId) where T : ISceneService
         {
             var core = GetSceneCore();
-
             if (core.Services.TryGetValue(serviceId, out var service) == false)
             {
                 Debug.LogWarning($"No services found in the scene");
