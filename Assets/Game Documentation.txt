@@ -1,0 +1,20 @@
+TRY MAKE SIMPLE GAME USING CORE SYSTEM YANG UDAH DIBUAT
+
+GDD :
+1. Player bisa nembak
+2. Obstacle yang akan hancur
+3. Coin untuk score
+4. Beli upgrade pakai coin yang dikumpulin
+
+---------
+GameManager
+AsteroidManager
+ShopManager
+---------
+
+[v] Buat Player kiri kanan
+[v] Buat Player nembak projectile
+[v] Buat asteroid
+[v] Asteroid hancur kalau ditembak
+[v] Buat score
+[v] Player dapat score saat asteroid hancur
