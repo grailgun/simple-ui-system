@@ -168,10 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   servicesGameObjects:
-  - {fileID: 260580006}
   - {fileID: 1794885665}
   - {fileID: 123897554}
-  - {fileID: 915446881}
 --- !u!1 &123897554
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e833ff1e7e46e5b4484c2f8fcfa01507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serviceId: 
+  serviceId: {fileID: 11400000, guid: 1ef935fb0322b284687278efe90b3c1e, type: 2}
   asteroidPrefab: {fileID: 1314601007687161651, guid: 417987da310531743b86177a945f14e9, type: 3}
   spawnInterval: 1
   spawnArea: {x: -4, y: 4}
@@ -337,56 +335,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starterPage: {fileID: 11400000, guid: c81d840177fe7cd4ca2ff18d73135eb9, type: 2}
   _stackedPages: []
---- !u!1 &260580006
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 260580008}
-  - component: {fileID: 260580007}
-  m_Layer: 0
-  m_Name: Additive Scene Loader
-  m_TagString: SceneService
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &260580007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260580006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2da3e3016b641843a07fe56f46f12c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serviceId: GameManager
-  currentScore: 0
-  player: {fileID: 1573332172}
-  OnScoreChange:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &260580008
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260580006}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &326209079
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,56 +623,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &915446881
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 915446883}
-  - component: {fileID: 915446882}
-  m_Layer: 0
-  m_Name: Remove Loading Screen
-  m_TagString: SceneService
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &915446882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915446881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2da3e3016b641843a07fe56f46f12c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serviceId: GameManager
-  currentScore: 0
-  player: {fileID: 1573332172}
-  OnScoreChange:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &915446883
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915446881}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &987361098
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,54 +851,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1 &1499757971
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1499757973}
-  - component: {fileID: 1499757972}
-  m_Layer: 0
-  m_Name: AsteroidSpawner (1)
-  m_TagString: SceneService
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1499757972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499757971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e833ff1e7e46e5b4484c2f8fcfa01507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serviceId: 
-  asteroidPrefab: {fileID: 1314601007687161651, guid: 417987da310531743b86177a945f14e9, type: 3}
-  spawnInterval: 1
-  spawnArea: {x: -4, y: 4}
---- !u!4 &1499757973
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499757971}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1545520973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,7 +1114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2da3e3016b641843a07fe56f46f12c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serviceId: GameManager
+  serviceId: {fileID: 11400000, guid: adb596d607fa8d14382f7fc8fda6244d, type: 2}
   currentScore: 0
   player: {fileID: 1573332172}
   OnScoreChange:
@@ -1541,10 +1391,7 @@ SceneRoots:
   - {fileID: 1437348166}
   - {fileID: 101991821}
   - {fileID: 1794885666}
-  - {fileID: 260580008}
-  - {fileID: 915446883}
   - {fileID: 123897555}
-  - {fileID: 1499757973}
   - {fileID: 767249312}
   - {fileID: 131631342}
   - {fileID: 326209082}

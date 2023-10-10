@@ -17,7 +17,6 @@ public class AsteroidSpawner : SceneService
 
     private void Awake()
     {
-        serviceId = nameof(AsteroidSpawner);
         _gameManager = SceneServiceProvider.GetService<GameManager>();
     }
 
