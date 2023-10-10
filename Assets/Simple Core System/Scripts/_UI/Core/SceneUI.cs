@@ -7,31 +7,32 @@ namespace Core.UI
     [DefaultExecutionOrder(-1)]
     public class SceneUI : MonoBehaviour
     {
-        public Canvas Canvas { get; private set; }
-        public Camera UICamera { get; private set; }
-
         [Header("Starter Page")]
         [SerializeField]
         private EnumId starterPage;
         [SerializeField]
-        private List<UIPage> _stackedPages;
+        private List<UIPage> stackedPages;
+
+        [Header("Pop Up")]
+        [SerializeField]
+        private List<UIPage> popUps;
 
         private Dictionary<EnumId, UIPage> _cachedPages;
+        private Dictionary<EnumId, UIPage> _cachedPopups;
 
         private void Awake()
         {
-            Canvas = GetComponent<Canvas>();
-            UICamera = Canvas.worldCamera;
-
             _cachedPages = new Dictionary<EnumId, UIPage>();
-            _stackedPages = new List<UIPage>();
+            _cachedPopups = new Dictionary<EnumId, UIPage>();
+            stackedPages = new List<UIPage>();
 
             PreparePages();
+            PreparePopups();
         }
 
         private IEnumerator Start()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
             
             if(starterPage != null)
                 PushPage(starterPage);
@@ -65,7 +66,7 @@ namespace Core.UI
             }
 
             // Change top page to new page
-            _stackedPages.Insert(0, pushedPage);
+            stackedPages.Insert(0, pushedPage);
             pushedPage.OnPush(data);
             pushedPage.Open();
         }
@@ -73,7 +74,7 @@ namespace Core.UI
         public void PopToFirstPage()
         {
             if(starterPage != null)
-                PopToPage(_stackedPages[_stackedPages.Count - 1].PageID);
+                PopToPage(stackedPages[stackedPages.Count - 1].PageID);
         }
 
         public void PopToPage(EnumId pageId)
@@ -87,9 +88,9 @@ namespace Core.UI
             UIPage targetPage = null;
             List<UIPage> toBePoppedPage = new List<UIPage>();
 
-            for (int i = 0; i < _stackedPages.Count; i++)
+            for (int i = 0; i < stackedPages.Count; i++)
             {
-                UIPage page = _stackedPages[i];
+                UIPage page = stackedPages[i];
 
                 if (page.PageID.IsEqual(pageId) == false)
                 {
@@ -106,7 +107,7 @@ namespace Core.UI
             {
                 UIPage poppedPage = toBePoppedPage[i];
                 poppedPage.Close();
-                _stackedPages.Remove(poppedPage);
+                stackedPages.Remove(poppedPage);
             }
 
             if (targetPage == null)
@@ -120,7 +121,7 @@ namespace Core.UI
             UIPage pageToPop = GetTopPage();
             if (pageToPop != null)
             {
-                _stackedPages.RemoveAt(0);
+                stackedPages.RemoveAt(0);
                 pageToPop.Close();
             }
 
@@ -139,10 +140,18 @@ namespace Core.UI
             return null;
         }
 
+        public UIPopup GetPopup(EnumId popupId)
+        {
+            if (_cachedPopups.ContainsKey(popupId))
+                return _cachedPopups[popupId] as UIPopup;
+
+            return null;
+        }
+
         private UIPage GetTopPage()
         {
-            if (_stackedPages.Count > 0)
-                return _stackedPages[0];
+            if (stackedPages.Count > 0)
+                return stackedPages[0];
 
             return null;
         }
@@ -166,11 +175,31 @@ namespace Core.UI
                 _cachedPages.TryAdd(page.PageID, page);
             }
         }
-    
+
+        private void PreparePopups()
+        {
+            var popups = GetComponentsInChildren<UIPopup>(true);
+
+            foreach (var popup in popups)
+            {
+                popup.gameObject.SetActive(true);
+                if (popup.PageID == null)
+                {
+                    Debug.LogError($"Page id of Page {popup.name} is Null. Can't add to dictionary.");
+                    continue;
+                }
+
+                popup.SetupPage(this);
+                popup.Close();
+
+                _cachedPopups.TryAdd(popup.PageID, popup);
+            }
+        }
+
         private UIPage GetPageFromStack(EnumId pageId)
         {
             UIPage result = null;
-            foreach (var page in _stackedPages)
+            foreach (var page in stackedPages)
             {
                 if (page.PageID.IsEqual(pageId))
                 {

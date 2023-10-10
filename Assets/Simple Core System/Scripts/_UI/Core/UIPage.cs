@@ -13,10 +13,12 @@ namespace Core.UI
         public virtual bool DisablePreviousPage => disablePreviousPage;
 
         [Header("UI ID")]
-        [SerializeField] private EnumId pageId;
+        [SerializeField] 
+        private EnumId pageId;
 
         [Header("Page Setting")]
-        [SerializeField] private bool disablePreviousPage = false;
+        [SerializeField] 
+        private bool disablePreviousPage = false;
 
         [Header("Events Hook")]
         public UnityEvent<PageData> OnPushed;
