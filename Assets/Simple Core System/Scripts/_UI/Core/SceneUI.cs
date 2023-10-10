@@ -7,9 +7,6 @@ namespace Core.UI
     [DefaultExecutionOrder(-1)]
     public class SceneUI : MonoBehaviour
     {
-        public Canvas Canvas { get; private set; }
-        public Camera UICamera { get; private set; }
-
         [Header("Starter Page")]
         [SerializeField]
         private EnumId starterPage;
@@ -20,9 +17,6 @@ namespace Core.UI
 
         private void Awake()
         {
-            Canvas = GetComponent<Canvas>();
-            UICamera = Canvas.worldCamera;
-
             _cachedPages = new Dictionary<EnumId, UIPage>();
             _stackedPages = new List<UIPage>();
 
