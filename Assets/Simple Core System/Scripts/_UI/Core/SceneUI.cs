@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Core.UI
 {
     [DefaultExecutionOrder(-1)]
-    public class SceneUI : MonoBehaviour
+    public class SceneUI : SceneService
     {
         [Header("Starter Page")]
         [SerializeField]
@@ -25,7 +25,7 @@ namespace Core.UI
 
         private IEnumerator Start()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
             
             if(starterPage != null)
                 PushPage(starterPage);

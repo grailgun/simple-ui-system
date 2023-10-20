@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SceneUI
   - SceneService
+  - SceneCore
   layers:
   - Default
   - TransparentFX

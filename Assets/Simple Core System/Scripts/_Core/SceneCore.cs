@@ -49,7 +49,7 @@ namespace Core
 
     public static class SceneServiceProvider
     {
-        public const string SCENE_CORE_TAG = "GameController";        
+        public const string SCENE_CORE_TAG = "SceneCore";        
         public const string SCENE_SERVICE_TAG = "SceneService";
 
         private static SceneCore _cachedCore;
