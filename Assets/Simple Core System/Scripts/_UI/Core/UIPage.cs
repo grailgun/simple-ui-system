@@ -1,12 +1,19 @@
 using Lean.Gui;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Core.UI
 {
-    [RequireComponent(typeof(CanvasGroup))]
-    public class UIPage : LeanWindow
+    public class UIPage : MonoBehaviour
     {
+        public enum ClosePageType
+        {
+            CanvasGraphic = 0,
+            GameObject = 1,
+        }
+
         public EnumId PageID => pageId;
         public PageData PageData => _pageData;
         public SceneUI SceneUI => _sceneUI;
@@ -17,18 +24,25 @@ namespace Core.UI
 
         [Header("Page Setting")]
         [SerializeField] private bool disablePreviousPage = false;
+        [SerializeField] private ClosePageType offType;
 
         [Header("Events Hook")]
         public UnityEvent<PageData> OnPushed;
+        public UnityEvent OnOpen;
+        public UnityEvent OnClose;
 
         private SceneUI _sceneUI;
         private PageData _pageData;
+        private Canvas _canvas;
+        private GraphicRaycaster _graphicRaycaster;
 
         #region INTERNAL CLASS
         internal void SetupPage(SceneUI sceneUI)
         {
             _sceneUI = sceneUI;
-            TurnOffNow();            
+
+            _canvas = GetComponent<Canvas>();
+            _graphicRaycaster = GetComponent<GraphicRaycaster>();
         }
 
         internal void OnPush(PageData data)
@@ -39,14 +53,16 @@ namespace Core.UI
 
         internal void Open()
         {
-            //need more functional things?
-            TurnOn();
+            SetPage(true);
+
+            OnOpen?.Invoke();
         }
 
         internal void Close()
         {
-            //need more functional things?
-            TurnOff();
+            SetPage(false);
+
+            OnClose?.Invoke();
         }
         #endregion
 
@@ -73,6 +89,25 @@ namespace Core.UI
         public void Return()
         {
             SceneUI.PopPage();
+        }
+
+        private void SetPage(bool condition)
+        {
+            if (offType == ClosePageType.CanvasGraphic)
+            {
+                if (_canvas != null)
+                    _canvas.enabled = condition;
+                else
+                    gameObject.SetActive(condition);
+
+                if (_graphicRaycaster != null)
+                    _graphicRaycaster.enabled = condition;
+
+            }
+            else if(offType == ClosePageType.GameObject)
+            {
+                gameObject.SetActive(condition);
+            }
         }
     }
 }
