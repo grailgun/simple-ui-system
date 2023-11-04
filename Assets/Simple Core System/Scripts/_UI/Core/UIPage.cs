@@ -1,3 +1,4 @@
+using BrunoMikoski.AnimationSequencer;
 using Lean.Gui;
 using System;
 using UnityEngine;
@@ -17,7 +18,8 @@ namespace Core.UI
         public EnumId PageID => pageId;
         public PageData PageData => _pageData;
         public SceneUI SceneUI => _sceneUI;
-        public virtual bool DisablePreviousPage => disablePreviousPage;
+        public bool DisablePreviousPage => disablePreviousPage;
+        public bool IsCloseAnimationIsPlaying => closePageAnimation != null ? closePageAnimation.IsPlaying : true;
 
         [Header("UI ID")]
         [SerializeField] private EnumId pageId;
@@ -26,23 +28,31 @@ namespace Core.UI
         [SerializeField] private bool disablePreviousPage = false;
         [SerializeField] private ClosePageType offType;
 
+        [Header("Page Animation")]
+        [SerializeField]
+        private AnimationSequencerController openPageAnimation;
+        [SerializeField]
+        private AnimationSequencerController closePageAnimation;
+
         [Header("Events Hook")]
         public UnityEvent<PageData> OnPushed;
         public UnityEvent OnOpen;
+        public UnityEvent OnRefresh;
         public UnityEvent OnClose;
 
         private SceneUI _sceneUI;
         private PageData _pageData;
         private Canvas _canvas;
         private GraphicRaycaster _graphicRaycaster;
+        private CanvasGroup _canvasGroup;
 
-        #region INTERNAL CLASS
         internal void SetupPage(SceneUI sceneUI)
         {
             _sceneUI = sceneUI;
 
             _canvas = GetComponent<Canvas>();
             _graphicRaycaster = GetComponent<GraphicRaycaster>();
+            _canvasGroup = GetComponent<CanvasGroup>();
         }
 
         internal void OnPush(PageData data)
@@ -53,18 +63,49 @@ namespace Core.UI
 
         internal void Open()
         {
-            SetPage(true);
+            SetPageVisibility(true);
+            
+            if (openPageAnimation != null)
+            {
+                openPageAnimation.ResetToInitialState();
+                openPageAnimation.Play(() => 
+                {
+                    SetRaycast(true);
+                });
+            }
 
             OnOpen?.Invoke();
         }
 
+        internal void Refresh()
+        {
+            OnRefresh?.Invoke();
+        }
+
         internal void Close()
         {
-            SetPage(false);
+            if (closePageAnimation != null)
+            {
+                SetRaycast(false);
+                closePageAnimation.ResetToInitialState();
+                closePageAnimation.Play(() => 
+                {
+                    closePageAnimation.ResetToInitialState();
+                    SetPageVisibility(false);
+                });
+            }
+            else
+            {
+                SetPageVisibility(false);
+            }
 
             OnClose?.Invoke();
         }
-        #endregion
+
+        internal void InstantClose()
+        {
+            SetPageVisibility(false);
+        }
 
         public void OpenPage(EnumId pageId)
         {
@@ -91,22 +132,37 @@ namespace Core.UI
             SceneUI.PopPage();
         }
 
-        private void SetPage(bool condition)
+        private void SetPageVisibility(bool condition)
         {
             if (offType == ClosePageType.CanvasGraphic)
             {
                 if (_canvas != null)
+                {
                     _canvas.enabled = condition;
+                }
                 else
+                {
                     gameObject.SetActive(condition);
-
-                if (_graphicRaycaster != null)
-                    _graphicRaycaster.enabled = condition;
-
+                }
             }
-            else if(offType == ClosePageType.GameObject)
+            else if (offType == ClosePageType.GameObject)
             {
                 gameObject.SetActive(condition);
+            }
+
+            SetRaycast(condition);
+        }
+
+        private void SetRaycast(bool condition)
+        {
+            if (_canvasGroup != null)
+            {
+                _canvasGroup.interactable = condition;
+            }
+
+            if (_graphicRaycaster != null)
+            {
+                _graphicRaycaster.enabled = condition;
             }
         }
     }
