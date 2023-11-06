@@ -46,6 +46,8 @@ namespace Core.UI
         private GraphicRaycaster _graphicRaycaster;
         private CanvasGroup _canvasGroup;
 
+        private IPageAnimator _pageAnimator;
+
         internal void SetupPage(SceneUI sceneUI)
         {
             _sceneUI = sceneUI;
@@ -53,6 +55,8 @@ namespace Core.UI
             _canvas = GetComponent<Canvas>();
             _graphicRaycaster = GetComponent<GraphicRaycaster>();
             _canvasGroup = GetComponent<CanvasGroup>();
+
+            _pageAnimator = GetComponent<IPageAnimator>();
         }
 
         internal void OnPush(PageData data)
@@ -65,10 +69,9 @@ namespace Core.UI
         {
             SetPageVisibility(true);
             
-            if (openPageAnimation != null)
+            if (_pageAnimator != null)
             {
-                openPageAnimation.ResetToInitialState();
-                openPageAnimation.Play(() => 
+                _pageAnimator.PlayAnimation(() =>
                 {
                     SetRaycast(true);
                 });
@@ -84,11 +87,10 @@ namespace Core.UI
 
         internal void Close()
         {
-            if (closePageAnimation != null)
+            if (_pageAnimator != null)
             {
                 SetRaycast(false);
-                closePageAnimation.ResetToInitialState();
-                closePageAnimation.Play(() => 
+                _pageAnimator.CloseAnimation(() =>
                 {
                     closePageAnimation.ResetToInitialState();
                     SetPageVisibility(false);

@@ -649,6 +649,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
+    Android: DOTWEEN_ENABLED
     Standalone: DOTWEEN_ENABLED
   additionalCompilerArguments: {}
   platformArchitecture: {}
