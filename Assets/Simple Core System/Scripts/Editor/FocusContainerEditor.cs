@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -26,3 +27,4 @@ namespace Core.UI.UIEditor
         }
     }
 }
+#endif

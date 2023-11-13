@@ -38,30 +38,7 @@ namespace Core.UI
 
         public void PushPage(EnumId pageId, PageData data)
         {
-            if (GetPageFromStack(pageId) != null)
-            {
-                Debug.LogWarning(string.Format("Screen {0} already exists in the stack. Ignoring push request.", pageId.name));
-                return;
-            }
-
-            if (_cachedPages.TryGetValue(pageId, out UIPage pushedPage) == false)
-            {
-                // Or maybe spawn the page?
-                Debug.Log($"Page {pageId} doesn't exist");
-                return;
-            }
-
-            // Set current top page condition
-            UIPage topPage = GetTopPage();
-            if (topPage != null && pushedPage.DisablePreviousPage)
-            {
-                topPage.Close();
-            }
-
-            // Change top page to new page
-            _stackedPages.Insert(0, pushedPage);
-            pushedPage.OnPush(data);
-            pushedPage.Open();
+            StartCoroutine(PushPageCoroutine(pageId, data));
         }
         
         public void PopToFirstPage()
@@ -111,18 +88,7 @@ namespace Core.UI
 
         public void PopPage()
         {
-            UIPage pageToPop = GetTopPage();
-            if (pageToPop != null)
-            {
-                _stackedPages.RemoveAt(0);
-                pageToPop.Close();
-            }
-
-            UIPage newTopPage = GetTopPage();
-            if (newTopPage != null)
-            {
-                newTopPage.Open();
-            }
+            StartCoroutine(PopPageCoroutine());
         }
 
         public UIPage GetPage(EnumId pageId)
@@ -155,12 +121,61 @@ namespace Core.UI
                 }
 
                 page.SetupPage(this);
-                page.Close();
+                page.InstantClose();
 
                 _cachedPages.TryAdd(page.PageID, page);
             }
         }
     
+        private IEnumerator PushPageCoroutine(EnumId pageId, PageData data)
+        {
+            if (GetPageFromStack(pageId) != null)
+            {
+                Debug.LogWarning(string.Format("Screen {0} already exists in the stack. Ignoring push request.", pageId.name));
+                yield break;
+            }
+
+            if (_cachedPages.TryGetValue(pageId, out UIPage pushedPage) == false)
+            {
+                // Or maybe spawn the page?
+                Debug.Log($"Page {pageId} doesn't exist");
+                yield break;
+            }
+
+            // Set current top page condition
+            UIPage topPage = GetTopPage();
+            if (topPage != null && pushedPage.DisablePreviousPage)
+            {
+                topPage.Close();
+                yield return new WaitUntil(() => { return topPage.IsCloseAnimationIsPlaying == false; });
+            }            
+
+            // Change top page to new page
+            _stackedPages.Insert(0, pushedPage);
+            pushedPage.OnPush(data);
+            pushedPage.Open();
+        }
+
+        private IEnumerator PopPageCoroutine()
+        {
+            UIPage pageToPop = GetTopPage();
+            if (pageToPop != null)
+            {
+                _stackedPages.RemoveAt(0);
+                pageToPop.Close();
+                yield return new WaitUntil(() => { return pageToPop.IsCloseAnimationIsPlaying == false; });
+            }
+
+            UIPage newTopPage = GetTopPage();
+            if (newTopPage != null)
+            {
+                if (pageToPop.DisablePreviousPage)
+                    newTopPage.Open();
+                else
+                    newTopPage.Refresh();
+            }
+        }
+
         private UIPage GetPageFromStack(EnumId pageId)
         {
             UIPage result = null;

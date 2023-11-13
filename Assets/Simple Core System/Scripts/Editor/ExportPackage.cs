@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 
@@ -11,3 +12,5 @@ public static class ExportPackage
         Debug.Log("Project Exported");
     }
 }
+
+#endif
