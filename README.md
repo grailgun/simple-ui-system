@@ -8,7 +8,6 @@ This is a simple architechture using Service locator pattern to locate all servi
 - Using tag 'Scene Core'
 
 # Scene Service
-- Replacement of singleton
 - Every manager/service class will inherit this SceneService class
 - Hold Service ID (scriptable object) as ID to be referenced by other class
 - Using tag 'SceneService'
